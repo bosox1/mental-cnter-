@@ -1,6 +1,7 @@
+import { useLayoutEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
 import Layout from './components/Layout.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Services from './pages/Services.jsx'
@@ -8,15 +9,23 @@ import News from './pages/News.jsx'
 import Contacts from './pages/Contacts.jsx'
 import NotFound from './pages/NotFound.jsx'
 
+// Після переходу між сторінками прокрутка має скинутись на початок
+// ДО малювання кадру — інакше видно порожню ділянку старої позиції.
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [pathname])
+
   return null
 }
 
 export default function App() {
   return (
-    <>
+    <ErrorBoundary>
       <ScrollToTop />
       <Layout>
         <Routes>
@@ -28,6 +37,6 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
-    </>
+    </ErrorBoundary>
   )
 }

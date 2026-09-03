@@ -1,78 +1,93 @@
 import { Link } from 'react-router-dom'
+import { Icon } from '@iconify/react'
 import { contacts, nav, partners } from '../data/site.js'
 
 const socials = [
-  { label: 'INSTAGRAM', href: contacts.instagram },
-  { label: 'FACEBOOK', href: contacts.facebook },
-  { label: 'TELEGRAM', href: contacts.telegram },
+  { label: 'Telegram', href: contacts.telegram, icon: 'cib:telegram-plane' },
+  { label: 'Instagram', href: contacts.instagram, icon: 'cib:instagram' },
+  { label: 'Facebook', href: contacts.facebook, icon: 'cib:facebook-f' },
 ].filter((s) => s.href)
 
 export default function Footer() {
   return (
     <footer className="bg-ink text-white">
-      <div className="mx-auto w-full max-w-[970px] px-6 py-20 md:px-8">
-        <div className="grid gap-10 md:grid-cols-2">
-          <address className="space-y-1 text-sm not-italic md:text-xl">
-            <p>{contacts.city}</p>
-            <p>{contacts.street}</p>
-            <p className="pt-4">
-              EMAIL:{' '}
-              <a href={`mailto:${contacts.email}`} className="underline underline-offset-4">
-                {contacts.email}
-              </a>
+      <div className="mx-auto w-full max-w-[1180px] px-6 py-16 sm:px-8 md:py-20 lg:px-12">
+        <div className="grid gap-12 md:grid-cols-[1fr_auto] md:gap-16">
+          <address className="not-italic">
+            <p className="text-label uppercase tracking-[0.08em] text-white/50">Адреса</p>
+            <p className="mt-3 text-lead">
+              {contacts.city}
+              <br />
+              {contacts.street}
             </p>
-            <p>
-              <a href={contacts.phoneHref} className="underline underline-offset-4">
+            <p className="mt-6">
+              <a
+                href={contacts.phoneHref}
+                className="text-lead underline decoration-white/40 underline-offset-4 hover:decoration-white"
+              >
                 {contacts.phone}
               </a>
             </p>
+            <p>
+              <a
+                href={`mailto:${contacts.email}`}
+                className="underline decoration-white/40 underline-offset-4 hover:decoration-white"
+              >
+                {contacts.email}
+              </a>
+            </p>
+
+            {socials.length > 0 && (
+              <div className="mt-6 flex flex-wrap gap-4">
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-white/70 transition-colors hover:text-white"
+                  >
+                    <Icon icon={s.icon} width="18" height="18" aria-hidden="true" />
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            )}
           </address>
 
-          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm md:justify-end md:text-xl">
-            {nav.map((item) => (
-              <Link key={item.to} to={item.to} className="hover:underline">
-                {item.label}
-              </Link>
-            ))}
+          <nav className="md:text-right" aria-label="Меню у підвалі">
+            <p className="text-label uppercase tracking-[0.08em] text-white/50">Розділи</p>
+            <ul className="mt-3 space-y-2">
+              {nav.map((item) => (
+                <li key={item.to}>
+                  <Link to={item.to} className="text-lead hover:underline hover:underline-offset-4">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
 
-        {socials.length > 0 && (
-          <div className="mt-14">
-            <p className="text-sm md:text-xl">СОЦІАЛЬНІ МЕРЕЖІ</p>
-            <div className="mt-3 flex flex-wrap gap-6 text-sm">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline"
+        <div className="mt-14 border-t border-white/15 pt-8">
+          <p className="text-label uppercase tracking-[0.08em] text-white/50">Партнери</p>
+          <ul className="mt-4 flex flex-wrap items-center gap-3">
+            {partners.map((p) => (
+              <li key={p.name}>
+                <span
+                  className="flex h-14 items-center rounded-xl bg-white px-5"
+                  title={p.name}
                 >
-                  {s.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="mt-14 flex flex-wrap items-center gap-4">
-          {partners.map((p) => (
-            <span
-              key={p.name}
-              className="flex h-16 items-center rounded-xl bg-white px-5"
-              title={p.name}
-            >
-              <img src={p.logo} alt={p.name} loading="lazy" className="max-h-9 w-auto" />
-            </span>
-          ))}
+                  <img src={p.logo} alt={p.name} loading="lazy" className="max-h-8 w-auto" />
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <p className="mt-16 font-display text-5xl text-mute underline underline-offset-8 md:text-[120px] md:leading-none">
-          Подбай про себе
-        </p>
+        <p className="mt-16 font-display text-h1 text-sun">Подбай про себе</p>
 
-        <p className="mt-10 text-xs md:text-sm">{contacts.copyright}</p>
+        <p className="mt-10 text-xs text-white/50 md:text-sm">{contacts.copyright}</p>
       </div>
     </footer>
   )

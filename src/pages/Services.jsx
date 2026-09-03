@@ -1,35 +1,45 @@
 import Container from '../components/Container.jsx'
 import BackLink from '../components/BackLink.jsx'
 import BookingButton from '../components/BookingButton.jsx'
-import { services } from '../data/site.js'
+import usePageMeta from '../hooks/usePageMeta.js'
+import { services, meta } from '../data/site.js'
 
 export default function Services() {
+  usePageMeta('Послуги', meta.services)
+
   return (
     <>
-      <Container className="pt-4">
+      <Container className="pt-6">
         <BackLink />
       </Container>
 
-      <section className="mt-8 bg-white py-16 md:py-24">
+      <section className="mt-6 bg-white py-16 md:py-24">
         <Container>
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-20">
+            <div>
+              <h1 className="max-w-[20ch] font-display text-h1">{services.lead}</h1>
+
+              <ul className="mt-10 max-w-[440px]">
+                {services.groups.map((g) => (
+                  <li
+                    key={g}
+                    className="border-t border-line py-4 text-lead first:border-t-0 first:pt-0"
+                  >
+                    {g}
+                  </li>
+                ))}
+              </ul>
+
+              <BookingButton className="mt-10" />
+            </div>
+
             <img
               src={services.image}
               alt=""
-              loading="lazy"
-              className="w-full max-w-[488px] rounded-2xl object-cover"
+              width="526"
+              height="755"
+              className="w-full max-w-[420px] justify-self-center rounded-2xl object-cover lg:justify-self-end"
             />
-            <div>
-              <h1 className="font-display text-3xl leading-snug md:text-[48px]">{services.lead}</h1>
-              <ul className="mt-8 space-y-2 text-body md:text-xl">
-                {services.groups.map((g) => (
-                  <li key={g}>{g}</li>
-                ))}
-              </ul>
-              <div className="mt-10">
-                <BookingButton />
-              </div>
-            </div>
           </div>
         </Container>
       </section>

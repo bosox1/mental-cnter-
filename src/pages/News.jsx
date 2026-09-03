@@ -1,54 +1,49 @@
 import Container from '../components/Container.jsx'
-import LabelRule from '../components/LabelRule.jsx'
-import BackLink from '../components/BackLink.jsx'
-import { news } from '../data/site.js'
+import Section from '../components/Section.jsx'
+import PageIntro from '../components/PageIntro.jsx'
+import usePageMeta from '../hooks/usePageMeta.js'
+import { news, meta } from '../data/site.js'
 
 export default function News() {
+  usePageMeta('Новини', meta.news)
+
   return (
     <>
-      <Container className="pt-4">
-        <BackLink />
-      </Container>
+      <PageIntro
+        title={news.lead}
+        image={news.heroImage}
+        imageWidth="185"
+        imageHeight="253"
+        imageMax={185}
+        labelLeft={news.labelLeft}
+        labelRight={news.labelRight}
+        columnLeft={news.columnLeft}
+        columnRight={news.columnRight}
+      />
 
-      <section className="mt-8 bg-white py-16 md:py-24">
+      <Section>
         <Container>
-          <div className="grid gap-10 md:grid-cols-[1fr_auto] md:items-start">
-            <h1 className="max-w-[760px] font-display text-3xl leading-snug md:text-[56px]">
-              {news.lead}
-            </h1>
-            <img
-              src={news.heroImage}
-              alt=""
-              loading="lazy"
-              className="w-full max-w-[185px] rounded-2xl object-cover"
-            />
-          </div>
-
-          <div className="mt-16 grid gap-10 md:grid-cols-2">
-            <p className="max-w-[400px] text-body">{news.columnLeft}</p>
-            <p className="max-w-[470px] text-body">{news.columnRight}</p>
-          </div>
-
-          <div className="mt-12">
-            <LabelRule left={news.labelLeft} right={news.labelRight} />
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-20 md:py-28">
-        <Container>
-          <h2 className="font-display text-4xl md:text-[56px]">{news.title}</h2>
-          <div className="mt-14 space-y-16">
+          <h2 className="font-display text-h2">{news.title}</h2>
+          <div className="mt-12 space-y-12">
             {news.items.map((item) => (
-              <article key={item.title} className="grid gap-8 border-t border-ink/20 pt-8 md:grid-cols-2 md:gap-16">
+              <article
+                key={item.title}
+                className="grid gap-6 border-t border-line pt-8 md:grid-cols-[minmax(0,1fr)_470px] md:gap-16"
+              >
                 <div>
-                  <h3 className="font-display text-2xl md:text-[32px]">{item.title}</h3>
-                  <p className="mt-4 text-body">{item.text}</p>
-                  {item.note && <p className="mt-6 text-sm text-body/70">{item.note}</p>}
+                  <h3 className="font-display text-h3">{item.title}</h3>
+                  <p className="mt-3 max-w-[58ch] text-body">{item.text}</p>
+                  {item.note && (
+                    <p className="mt-5 text-label uppercase tracking-[0.08em] text-soft">
+                      {item.note}
+                    </p>
+                  )}
                 </div>
                 <img
                   src={item.image}
                   alt=""
+                  width="470"
+                  height="321"
                   loading="lazy"
                   className="aspect-[470/321] w-full rounded-2xl object-cover"
                 />
@@ -56,7 +51,7 @@ export default function News() {
             ))}
           </div>
         </Container>
-      </section>
+      </Section>
     </>
   )
 }

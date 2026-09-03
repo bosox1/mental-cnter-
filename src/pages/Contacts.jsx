@@ -2,57 +2,86 @@ import { Icon } from '@iconify/react'
 import Container from '../components/Container.jsx'
 import BackLink from '../components/BackLink.jsx'
 import BookingButton from '../components/BookingButton.jsx'
-import { contacts, contactsPage } from '../data/site.js'
+import usePageMeta from '../hooks/usePageMeta.js'
+import { contacts, contactsPage, meta } from '../data/site.js'
 
 export default function Contacts() {
+  usePageMeta('Контакти', meta.contacts)
+
   return (
     <>
-      <Container className="pt-4">
+      <Container className="pt-6">
         <BackLink />
       </Container>
 
-      <section className="mt-8 bg-white py-16 md:py-24">
+      <section className="mt-6 bg-white py-16 md:py-24">
         <Container>
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
-            <img
-              src={contactsPage.image}
-              alt=""
-              loading="lazy"
-              className="w-full rounded-2xl object-cover"
-            />
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-20">
             <div>
-              <h1 className="font-display text-3xl leading-snug md:text-[48px]">
+              <h1 className="font-display text-h1">
                 {contactsPage.addressLines.map((line) => (
-                  <span key={line} className="block">{line}</span>
+                  <span key={line} className="block">
+                    {line}
+                  </span>
                 ))}
               </h1>
 
-              <p className="mt-8 font-display text-2xl md:text-[32px]">
-                <a href={contacts.phoneHref} className="hover:underline">{contacts.phone}</a>
-              </p>
-
-              <p className="mt-6 text-body md:text-xl">
-                Email:{' '}
-                <a href={`mailto:${contacts.email}`} className="underline underline-offset-4">
-                  {contacts.email}
-                </a>
-              </p>
-
-              <p className="mt-8 text-body md:text-xl">Соціальні мережі</p>
               <a
-                href={contacts.telegram}
+                href={contactsPage.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center gap-2 text-body hover:text-ink"
+                className="mt-4 inline-flex items-center gap-2 text-soft transition-colors hover:text-ink"
               >
-                <Icon icon="cib:telegram-plane" width="24" height="24" />
-                TELEGRAM
+                <Icon icon="material-symbols-light:location-on-outline" width="20" height="20" aria-hidden="true" />
+                Показати на карті
               </a>
 
-              <div className="mt-10">
-                <BookingButton />
-              </div>
+              <dl className="mt-10 max-w-[440px]">
+                <div className="border-t border-line py-4">
+                  <dt className="text-label uppercase tracking-[0.08em] text-soft">Телефон</dt>
+                  <dd className="mt-1">
+                    <a href={contacts.phoneHref} className="font-display text-h3 hover:underline">
+                      {contacts.phone}
+                    </a>
+                  </dd>
+                </div>
+                <div className="border-t border-line py-4">
+                  <dt className="text-label uppercase tracking-[0.08em] text-soft">Пошта</dt>
+                  <dd className="mt-1">
+                    <a
+                      href={`mailto:${contacts.email}`}
+                      className="text-lead underline underline-offset-4"
+                    >
+                      {contacts.email}
+                    </a>
+                  </dd>
+                </div>
+                <div className="border-t border-line py-4">
+                  <dt className="text-label uppercase tracking-[0.08em] text-soft">Соцмережі</dt>
+                  <dd className="mt-1">
+                    <a
+                      href={contacts.telegram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-lead transition-colors hover:text-ink"
+                    >
+                      <Icon icon="cib:telegram-plane" width="20" height="20" aria-hidden="true" />
+                      Telegram
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+
+              <BookingButton className="mt-10" />
             </div>
+
+            <img
+              src={contactsPage.image}
+              alt=""
+              width="589"
+              height="906"
+              className="w-full max-w-[420px] justify-self-center rounded-2xl object-cover lg:justify-self-end"
+            />
           </div>
         </Container>
       </section>

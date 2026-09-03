@@ -1,35 +1,75 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   Токени дизайну. Уся типографіка плинна (clamp), тому розміри
+   самі підлаштовуються під ширину екрана й не «випадають» на ноутбуках.
+------------------------------------------------------------------ */
 @theme {
+  /* Кольори */
   --color-sun: #fff47f;
+  --color-sun-soft: #fffbdb;
   --color-ink: #212121;
-  --color-body: #3b3b3b;
-  --color-mute: #dbdbdb;
-  --color-paper: #f5f5f5;
-  --color-soft: #7e7e7e;
+  --color-body: #3f3f3f;
+  --color-soft: #6f6f6f;
+  --color-line: #e2e2da;
+  --color-paper: #f5f5f3;
 
+  /* Шрифти */
   --font-display: "Cormorant", Georgia, serif;
   --font-sans: "Manrope", system-ui, sans-serif;
+
+  /* Типографічна шкала */
+  --text-display: clamp(2.75rem, 6.4vw, 6rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-h1: clamp(2rem, 3.6vw, 3.25rem);
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.01em;
+
+  --text-h2: clamp(1.75rem, 2.8vw, 2.5rem);
+  --text-h2--line-height: 1.16;
+
+  --text-h3: clamp(1.25rem, 1.5vw, 1.5rem);
+  --text-h3--line-height: 1.3;
+
+  --text-lead: clamp(1.0625rem, 1.1vw, 1.25rem);
+  --text-lead--line-height: 1.6;
+
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.08em;
 }
 
-html { scroll-behavior: smooth; }
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  h1, h2, h3, p, li {
+    text-wrap: pretty;
   }
 }
 
-body {
-  background: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-}
-
-:focus-visible {
-  outline: 3px solid var(--color-ink);
-  outline-offset: 3px;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,107 +1,129 @@
 import { Icon } from '@iconify/react'
 import Container from '../components/Container.jsx'
+import Section from '../components/Section.jsx'
 import LabelRule from '../components/LabelRule.jsx'
 import BookingButton from '../components/BookingButton.jsx'
-import { home } from '../data/site.js'
+import usePageMeta from '../hooks/usePageMeta.js'
+import { home, contacts, meta } from '../data/site.js'
 
 export default function Home() {
+  usePageMeta(null, meta.home)
+
   return (
     <>
       {/* Герой */}
-      <section className="relative -mt-[104px] overflow-hidden bg-sun pt-[104px]">
+      <section className="relative isolate overflow-hidden bg-sun">
         <div
-          className="pointer-events-none absolute -left-[32%] -top-[38%] hidden aspect-square w-[88%] rounded-full bg-white/35 md:block"
+          className="pointer-events-none absolute -right-[10%] top-1/2 hidden aspect-square w-[58%] -translate-y-1/2 rounded-full bg-white/40 lg:block"
           aria-hidden="true"
         />
-        <Container className="relative py-20 md:py-32">
-          <h1 className="font-display text-6xl leading-[0.95] sm:text-8xl md:text-[159px] md:leading-[0.9]">
-            {home.heroLines[0]}
-            <br />
-            {home.heroLines[1]}
-          </h1>
-          <div className="mt-10 grid items-end gap-10 md:grid-cols-[minmax(0,370px)_1fr]">
-            <div>
-              <p className="text-lg text-body md:text-xl">{home.heroSub}</p>
-              <div className="mt-12">
-                <BookingButton />
-              </div>
+        <Container className="relative grid items-center gap-12 py-14 md:py-20 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-16">
+          <div>
+            <h1 className="font-display text-display">
+              {home.heroLines[0]}
+              <br />
+              {home.heroLines[1]}
+            </h1>
+            <p className="mt-8 max-w-[42ch] text-lead text-body">{home.heroSub}</p>
+            <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <BookingButton />
+              <a
+                href={contacts.phoneHref}
+                className="inline-flex items-center gap-2 text-lead text-body transition-colors hover:text-ink"
+              >
+                <Icon icon="material-symbols-light:call" width="22" height="22" aria-hidden="true" />
+                {contacts.phone}
+              </a>
             </div>
-            <img
-              src={home.heroImage}
-              alt={home.heroImageAlt}
-              className="order-first w-full max-w-[420px] justify-self-end md:order-none"
-            />
           </div>
+
+          <img
+            src={home.heroImage}
+            alt={home.heroImageAlt}
+            width="514"
+            height="468"
+            className="w-full max-w-[380px] justify-self-center lg:max-w-[440px] lg:justify-self-end"
+          />
         </Container>
       </section>
 
-      {/* Вступ + місія */}
-      <section className="py-20 md:py-32">
+      {/* Вступ і місія */}
+      <Section>
         <Container>
-          <p className="font-display text-3xl leading-snug md:text-[56px]">{home.intro}</p>
+          <p className="max-w-[900px] font-display text-h1">{home.intro}</p>
 
-          <div className="mt-20 grid gap-10 md:grid-cols-2">
-            <p className="max-w-[370px] text-body">{home.mission.left}</p>
-            <p className="max-w-[370px] text-body">{home.mission.right}</p>
-          </div>
-
-          <div className="mt-12">
+          <div className="mt-14 md:mt-20">
             <LabelRule left={home.mission.labelLeft} right={home.mission.labelRight} />
+            <div className="mt-8 grid gap-10 md:grid-cols-2 md:gap-16">
+              <p className="text-body">{home.mission.left}</p>
+              <p className="text-body">{home.mission.right}</p>
+            </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* Напрямки роботи */}
-      <section className="bg-white py-20 md:py-28">
+      <Section tone="white">
         <Container>
-          <h2 className="font-display text-4xl md:text-[56px]">{home.directionsTitle}</h2>
-          <div className="mt-14 grid gap-12 md:grid-cols-2 md:gap-x-16">
+          <h2 className="max-w-[16ch] font-display text-h2">{home.directionsTitle}</h2>
+          <div className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
             {home.directions.map((d) => (
-              <div key={d.title} className="flex gap-6">
-                <span className="flex size-20 shrink-0 items-center justify-center rounded-full bg-sun">
-                  <Icon icon={d.icon} width="36" height="36" />
+              <div key={d.title}>
+                <span className="flex size-14 items-center justify-center rounded-full bg-sun">
+                  <Icon icon={d.icon} width="28" height="28" aria-hidden="true" />
                 </span>
-                <div>
-                  <h3 className="font-display text-2xl md:text-[28px]">{d.title}</h3>
-                  <p className="mt-2 text-soft">{d.text}</p>
-                </div>
+                <h3 className="mt-5 font-display text-h3">{d.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-soft">{d.text}</p>
               </div>
             ))}
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* Ми віримо */}
-      <section className="py-20 md:py-32">
+      <Section>
         <Container>
-          <h2 className="font-display text-3xl leading-snug md:text-[56px]">{home.belief.title}</h2>
+          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,320px)] md:items-end md:gap-16">
+            <h2 className="max-w-[18ch] font-display text-h2">{home.belief.title}</h2>
+            <p className="text-body">{home.belief.caption}</p>
+          </div>
+
           <img
             src={home.belief.image}
             alt={home.belief.imageAlt}
+            width="1000"
+            height="671"
             loading="lazy"
-            className="mt-12 aspect-[1000/671] w-full rounded-2xl object-cover"
+            className="mt-10 aspect-[1000/671] w-full max-w-[1000px] rounded-2xl object-cover"
           />
-          <p className="mt-8 text-body md:text-xl">{home.belief.caption}</p>
-          <div className="mt-10">
-            <LabelRule left={home.belief.labelLeft} right={home.belief.labelRight} />
-          </div>
+
+          <LabelRule
+            left={home.belief.labelLeft}
+            right={home.belief.labelRight}
+            className="mt-10"
+          />
         </Container>
-      </section>
+      </Section>
 
       {/* Принципи */}
-      <section className="pb-24 md:pb-32">
+      <Section tone="white">
         <Container>
-          <h2 className="font-display text-4xl md:text-[56px]">{home.principlesTitle}</h2>
-          <div className="mt-14 space-y-16">
+          <h2 className="max-w-[16ch] font-display text-h2">{home.principlesTitle}</h2>
+          <div className="mt-12 space-y-12">
             {home.principles.map((p) => (
-              <article key={p.title} className="grid gap-8 border-t border-ink/20 pt-8 md:grid-cols-2 md:gap-16">
+              <article
+                key={p.title}
+                className="grid gap-6 border-t border-line pt-8 md:grid-cols-[minmax(0,1fr)_470px] md:gap-16"
+              >
                 <div>
-                  <h3 className="font-display text-2xl md:text-[32px]">{p.title}</h3>
-                  <p className="mt-4 text-body">{p.text}</p>
+                  <h3 className="font-display text-h3">{p.title}</h3>
+                  <p className="mt-3 max-w-[58ch] text-body">{p.text}</p>
                 </div>
                 <img
                   src={p.image}
                   alt=""
+                  width="470"
+                  height="320"
                   loading="lazy"
                   className="aspect-[470/320] w-full rounded-2xl object-cover"
                 />
@@ -109,7 +131,7 @@ export default function Home() {
             ))}
           </div>
         </Container>
-      </section>
+      </Section>
     </>
   )
 }
