@@ -1,0 +1,21 @@
+node_modules
+dist
+dist-ssr
+.vite
+
+# локальні змінні оточення
+.env
+.env.local
+.env.*.local
+
+# логи
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# редактори та ОС
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
