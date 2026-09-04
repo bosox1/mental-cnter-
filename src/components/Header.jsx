@@ -54,7 +54,7 @@ export default function Header() {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `text-label uppercase tracking-[0.08em] transition-colors ${
+                `text-label tracking-[0.08em] transition-colors ${
                   isActive
                     ? 'text-ink underline decoration-1 underline-offset-[6px]'
                     : 'text-soft hover:text-ink'
