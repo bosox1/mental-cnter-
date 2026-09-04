@@ -141,6 +141,16 @@ export const about = {
       role: "Лікар-психотерапевт",
       photo: "/images/team-sorokhtei.jpg",
     },
+    {
+      name: "Дмитришин Наталія",
+      role: "Лікарка-психіатриня",
+      photo: "/images/team-dmytryshyn.jpg",
+    },
+    {
+      name: "Демків Микола",
+      role: "Лікар-психіатр",
+      photo: "/images/team-demkiv.jpg",
+    },
   ],
 };
 
