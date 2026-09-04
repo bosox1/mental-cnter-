@@ -2,10 +2,10 @@ import Container from '../components/Container.jsx'
 import Section from '../components/Section.jsx'
 import PageIntro from '../components/PageIntro.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
-import { about, meta } from '../data/site.js'
+import { about } from '../data/site.js'
 
 export default function About() {
-  usePageMeta('Хто ми', meta.about)
+  usePageMeta('/about')
 
   return (
     <>

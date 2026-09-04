@@ -1,19 +1,35 @@
 import { useEffect } from 'react'
+import { pages, siteName } from '../data/site.js'
 
-const SUFFIX = "ЗМІСТИ — Центр ментального здоров'я ІФНМУ"
+export function metaFor(path) {
+  const page = pages.find((p) => p.path === path)
+  return {
+    title: page?.title ? `${page.title} · ${siteName}` : siteName,
+    description: page?.description ?? '',
+  }
+}
 
-// Проставляє <title> і <meta name="description"> для кожної сторінки.
-export default function usePageMeta(title, description) {
+function setMeta(selector, attr, value) {
+  if (!value) return
+  let tag = document.head.querySelector(selector)
+  if (!tag) {
+    tag = document.createElement('meta')
+    const [key, val] = selector.replace(/meta\[|\]|"/g, '').split('=')
+    tag.setAttribute(key, val)
+    document.head.appendChild(tag)
+  }
+  tag.setAttribute(attr, value)
+}
+
+// Проставляє <title> і описи для сторінки під час переходів у браузері.
+// Ті самі значення вшиваються в HTML під час збірки — див. scripts/prerender.mjs
+export default function usePageMeta(path) {
   useEffect(() => {
-    document.title = title ? `${title} · ${SUFFIX}` : SUFFIX
-
-    if (!description) return
-    let tag = document.querySelector('meta[name="description"]')
-    if (!tag) {
-      tag = document.createElement('meta')
-      tag.setAttribute('name', 'description')
-      document.head.appendChild(tag)
-    }
-    tag.setAttribute('content', description)
-  }, [title, description])
+    const { title, description } = metaFor(path)
+    document.title = title
+    setMeta('meta[name="description"]', 'content', description)
+    setMeta('meta[property="og:title"]', 'content', title)
+    setMeta('meta[property="og:description"]', 'content', description)
+    setMeta('meta[property="og:url"]', 'content', window.location.origin + path)
+  }, [path])
 }

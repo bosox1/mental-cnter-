@@ -4,10 +4,10 @@ import Section from '../components/Section.jsx'
 import LabelRule from '../components/LabelRule.jsx'
 import BookingButton from '../components/BookingButton.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
-import { home, contacts, meta } from '../data/site.js'
+import { home, contacts } from '../data/site.js'
 
 export default function Home() {
-  usePageMeta(null, meta.home)
+  usePageMeta('/')
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function Home() {
           className="pointer-events-none absolute -right-[10%] top-1/2 hidden aspect-square w-[58%] -translate-y-1/2 rounded-full bg-white/40 lg:block"
           aria-hidden="true"
         />
-        <Container className="relative grid items-center gap-12 py-14 md:py-20 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-16">
+        <Container className="relative grid items-center gap-12 py-14 md:py-20 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16">
           <div>
             <h1 className="font-display text-display">
               {home.heroLines[0]}
@@ -40,9 +40,9 @@ export default function Home() {
           <img
             src={home.heroImage}
             alt={home.heroImageAlt}
-            width="514"
-            height="468"
-            className="w-full max-w-[380px] justify-self-center lg:max-w-[440px] lg:justify-self-end"
+            width="387"
+            height="439"
+            className="w-full max-w-[280px] justify-self-center sm:max-w-[340px] lg:max-w-[380px] lg:justify-self-end"
           />
         </Container>
       </section>

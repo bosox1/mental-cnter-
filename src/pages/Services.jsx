@@ -2,10 +2,10 @@ import Container from '../components/Container.jsx'
 import BackLink from '../components/BackLink.jsx'
 import BookingButton from '../components/BookingButton.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
-import { services, meta } from '../data/site.js'
+import { services } from '../data/site.js'
 
 export default function Services() {
-  usePageMeta('Послуги', meta.services)
+  usePageMeta('/services')
 
   return (
     <>
@@ -38,7 +38,7 @@ export default function Services() {
               alt=""
               width="526"
               height="755"
-              className="w-full max-w-[420px] justify-self-center rounded-2xl object-cover lg:justify-self-end"
+              className="w-full max-w-[260px] justify-self-center rounded-2xl object-cover sm:max-w-[320px] lg:max-w-[420px] lg:justify-self-end"
             />
           </div>
         </Container>

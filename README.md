@@ -7,18 +7,44 @@
 ```bash
 npm install
 npm run dev      # локально, http://localhost:5173
-npm run build    # збірка в dist/
+npm run build    # збірка в dist/ + пререндер сторінок
 ```
+
+`npm run build` робить три кроки:
+
+1. звичайна збірка Vite;
+2. серверна збірка `src/entry-server.jsx` у теку `.ssr` (у git не потрапляє);
+3. `scripts/prerender.mjs` — рендерить кожен маршрут у готовий HTML
+   (`dist/about/index.html` і т.д.), проставляє `<title>`, опис, Open Graph
+   і генерує `sitemap.xml` та `robots.txt`.
+
+Завдяки цьому Google і прев'ю посилань у месенджерах бачать справжній вміст,
+а не порожній `<div id="root">`. У браузері React «оживляє» цей HTML
+(`hydrateRoot` у `src/main.jsx`).
 
 ## Структура
 
 ```
 src/
-  data/site.js        ← весь текст і контакти. Правити контент тут.
-  components/         Header, Footer, Layout, Container, LabelRule, BookingButton, BackLink
+  data/site.js        ← весь текст, контакти, заголовки й описи сторінок
+  index.css           ← токени дизайну: кольори і типографічна шкала
+  components/         Header, Footer, Layout, Container, Section, LabelRule,
+                      PageIntro, BookingButton, BackLink, ErrorBoundary
+  hooks/usePageMeta   заголовок і опис сторінки під час переходів
   pages/              Home, About, Services, News, Contacts, NotFound
+  entry-server.jsx    точка входу для пререндеру
+scripts/prerender.mjs скрипт пререндеру
 public/images/        картинки (див. нижче)
+public/og.png         прев'ю для соцмереж, 1200×630
 ```
+
+### Розміри
+
+Уся типографіка задана через `clamp()` у блоці `@theme` в `src/index.css`
+(`--text-display`, `--text-h1`, `--text-h2`, `--text-h3`, `--text-lead`).
+Щоб зробити заголовки більшими чи меншими на всьому сайті — правити треба там,
+а не в компонентах. Ширина контейнера — 1180px (`Container.jsx`): це максимум,
+за якого ілюстрації 470px не розтягуються вище своєї роздільної здатності.
 
 Маршрути: `/` `/about` `/services` `/news` `/contacts`, решта → 404.
 
@@ -44,6 +70,14 @@ public/images/        картинки (див. нижче)
 
 `netlify.toml` уже налаштований: команда `npm run build`, тека `dist`, SPA-редирект на
 `index.html` (без нього прямі посилання типу `/news` віддавали б 404).
+
+Редирект не перекриває наявні файли (`force = false` за замовчуванням), тому
+пререндерені `dist/about/index.html` тощо віддаються як є, а редирект спрацьовує
+лише для неіснуючих адрес.
+
+Адресу сайту скрипт пререндеру бере зі змінної `URL`, яку Netlify підставляє сам —
+нічого прописувати руками не треба. Локально ця змінна порожня, тож `sitemap.xml`
+збирається лише на Netlify.
 
 1. Залити репозиторій на GitHub.
 2. Netlify → Add new site → Import from Git → вибрати репозиторій. Налаштування підхопляться

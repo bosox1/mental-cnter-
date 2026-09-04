@@ -2,10 +2,10 @@ import Container from '../components/Container.jsx'
 import Section from '../components/Section.jsx'
 import PageIntro from '../components/PageIntro.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
-import { news, meta } from '../data/site.js'
+import { news } from '../data/site.js'
 
 export default function News() {
-  usePageMeta('Новини', meta.news)
+  usePageMeta('/news')
 
   return (
     <>

@@ -3,10 +3,10 @@ import Container from '../components/Container.jsx'
 import BackLink from '../components/BackLink.jsx'
 import BookingButton from '../components/BookingButton.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
-import { contacts, contactsPage, meta } from '../data/site.js'
+import { contacts, contactsPage } from '../data/site.js'
 
 export default function Contacts() {
-  usePageMeta('Контакти', meta.contacts)
+  usePageMeta('/contacts')
 
   return (
     <>
@@ -80,7 +80,7 @@ export default function Contacts() {
               alt=""
               width="589"
               height="906"
-              className="w-full max-w-[420px] justify-self-center rounded-2xl object-cover lg:justify-self-end"
+              className="w-full max-w-[260px] justify-self-center rounded-2xl object-cover sm:max-w-[320px] lg:max-w-[420px] lg:justify-self-end"
             />
           </div>
         </Container>

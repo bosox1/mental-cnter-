@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
@@ -10,10 +10,20 @@ if ('scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual'
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const container = document.getElementById('root')
+
+const tree = (
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
+
+// Сторінки заздалегідь відрендерені під час збірки (scripts/prerender.mjs),
+// тому «оживляємо» готовий HTML замість того, щоб малювати з нуля.
+if (container.hasChildNodes()) {
+  hydrateRoot(container, tree)
+} else {
+  createRoot(container).render(tree)
+}

@@ -3,7 +3,7 @@ import Container from '../components/Container.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
 
 export default function NotFound() {
-  usePageMeta('Сторінку не знайдено')
+  usePageMeta('/404')
 
   return (
     <Container className="py-24 md:py-32">
